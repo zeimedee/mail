@@ -21,17 +21,18 @@ func main() {
 
 	Email = em
 	Password := pw
-	Recipient := "niiquaye.ashie.7@gmail.com"
+	Recipient := em
+	CC := []string{em}
 
 	path, err := os.Getwd()
 	sendmail.Check(err)
 
 	sender := sendmail.NewSender(Email, Password)
 
-	Msg, err := sender.WriteMessage("asta", path+"/mailTemplate/mail.html")
+	Msg, err := sender.WriteMessage("alex", path+"/mailTemplate/mail.html")
 	sendmail.Check(err)
 
-	body := sender.WriteEmail(Recipient, "alex", Msg)
+	body := sender.WriteEmail(Recipient, "alex", Msg, CC)
 
 	mail, err := sender.Mail("alex", string(body), Recipient)
 	if err != nil {

@@ -39,8 +39,16 @@ func (sender Sender) Mail(subject, message, dest string) (string, error) {
 	return "mail sent", nil
 }
 
-func (sender Sender) WriteEmail(dest, subject, msg string) string {
+func (sender Sender) WriteEmail(dest, subject, msg string, Cc []string) string {
 	header := make(map[string]string)
+
+	if len(Cc) != 0 {
+		var list string
+		for _, c := range Cc {
+			list += fmt.Sprint(c + ",")
+		}
+		header["Cc"] = list
+	}
 
 	header["From"] = sender.Email
 	header["To"] = dest
